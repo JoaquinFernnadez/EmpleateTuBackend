@@ -30,9 +30,7 @@ export class AuthService{
         })
 
     }
-
-
-
+    
     static async login(email: string, password: string, role: string){
         const findUser = await prisma.user.findUnique({where:{email}})
         if(!findUser) throw new Error("Invalid user or password")
@@ -44,8 +42,7 @@ export class AuthService{
             Token_password,
             {expiresIn:"1h"})
         return token 
-          
-
 
     }
+
 }
