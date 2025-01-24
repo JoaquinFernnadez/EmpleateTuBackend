@@ -8,6 +8,7 @@ export class AuthController{
             const userData = req.body
             const newUser = await AuthService.register(userData)
             res.status(201).json({message:'User register succesfully',newUser})
+           
         }
         catch(error){
             res.status(409).json({message:'Fallo al registrar al usuario'})
@@ -22,7 +23,14 @@ export class AuthController{
             // Validar el body ( opcional ) implementarlo en mi proyecto
             const token = await AuthService.login(userData.email,userData.password,userData.role)
             // inyectar una cookie al cliente en lugar del token
+            res.cookie('token',token,{
+                maxAge: 60 * 60 * 1000, // 1 hora de duracion
+                httpOnly: true, // no se puede acceder mediate js
+                secure: false,  // solo se envia por https
+                sameSite: 'strict', // Evita ataque CSRF
+            })
             res.status(201).json({message:'Login succesfully',token})
+            
         }
         catch(error){
             res.status(409).json({message:'Fallo al loguearse al usuario'})

@@ -32,11 +32,17 @@ export class AuthService{
     }
     
     static async login(email: string, password: string, role: string){
+
+        /*const query = `SELECT * FROM user WHERE email= '${email}'`
+
+        const findUsers = await prisma.$queryRawUnsafe(query) as User[]
+        const findUser = findUsers[0]*/
+
         const findUser = await prisma.user.findUnique({where:{email}})
         if(!findUser) throw new Error("Invalid user or password")
 
-       const isPaswordCorrect =  await bcrypt.compare(password,findUser.password)
-       if(!isPaswordCorrect) throw new Error("Invalid user or password")
+        const isPaswordCorrect =  await bcrypt.compare(password,findUser.password)
+        if(!isPaswordCorrect) throw new Error("Invalid user or password")
 
         const token = jwt.sign({colorFavorito: "azul",id:findUser.id, email:findUser.email},
             Token_password,

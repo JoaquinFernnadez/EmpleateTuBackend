@@ -1,13 +1,12 @@
 import { Router } from "express";
 import { AuthController } from "../controlers/auth.controller";
-import {isAuthenticate}  from "../middlewares/auth.middleware"
+import { isAuthenticate}  from "../middlewares/auth.middleware";
+import { UserController } from "../controlers/user.controller";
+import {isAdmin} from "../middlewares/user.middleware";
 
 const router = Router()
 
 router.get('/profile',isAuthenticate,  AuthController.profile )
-
-// Crea el endpoint que liste todos los usuarios de la web
-// A este endpoint solo puede acceder usuario con rol admin
-// Crear rutas, servicios, controllers y middlewares
+router.get('/listAll',isAdmin,isAuthenticate,  UserController.profile )
 
 export default router
