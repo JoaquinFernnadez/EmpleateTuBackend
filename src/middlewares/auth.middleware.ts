@@ -14,7 +14,7 @@ export const isAuthenticate = (req:Request, res: Response, next:NextFunction): a
         req.body.user = decodifyToken
         next()
     }catch(error){
-        res.status(401).json({error: "Invalid token"})
+        next(error)
     }
     
 }

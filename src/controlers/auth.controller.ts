@@ -1,6 +1,7 @@
 import { AuthService } from "../services/auth.service";
 import { Request, Response } from 'express';
 import {UserService}  from "../services/user.service";
+import HttpException from "@/exceptions/HttpException";
 
 export class AuthController{
     static async  register(req:Request, res:Response){
@@ -10,8 +11,8 @@ export class AuthController{
             res.status(201).json({message:'User register succesfully',newUser})
            
         }
-        catch(error){
-            res.status(409).json({message:'Fallo al registrar al usuario'})
+        catch(error: HttpException | any){
+            res.status(error.status).json({message:error.message})
         }
     }
 
