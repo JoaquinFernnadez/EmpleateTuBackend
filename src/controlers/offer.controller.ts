@@ -35,15 +35,16 @@ class OfferController {
     }
     static async update(req: Request, res: Response, next: NextFunction) {
         try {
-            const user = await OfferService.update()
-            res.status(200).json()
+            const id = Number(req.params.id)
+            const offer = await OfferService.update(id)
+            res.status(200).json(offer)
         } catch (error) {
             next(error)
         }
     }
     static async rate(req: Request, res: Response, next: NextFunction) {
         try {
-            const user = req.body.user.id
+            const user = req.cookies.token.id
             const rate = req.body.rate
             const id = Number(req.params.id)
             const offer = await OfferService.rate(id, rate, user)

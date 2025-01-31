@@ -1,3 +1,4 @@
+
 import HttpException from "../exceptions/HttpException";
 import { Offer, PrismaClient, User } from "@prisma/client";
 
@@ -27,9 +28,14 @@ export class OfferService {
         if (!offer) throw new HttpException(404, 'Offer not found')
         return "offert deleted"
     }
-    static async update() {
-        const users = await prisma.user.findMany()
-        return users
+    static async update(id: number) {
+        const findOffer = await prisma.offer.findUnique({ where: { id } })
+        if(!findOffer) throw new HttpException(404, 'Offer not found')
+        return await prisma.offer.update({
+        where:{id},
+        data:{
+            ...findOffer
+        }})
     }
     static async rate(idOffer: number, rate: number, user: User) {
         const findOffert = await prisma.offer.findUnique({ where: { id: idOffer } })
