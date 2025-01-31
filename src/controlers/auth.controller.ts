@@ -1,7 +1,7 @@
 import { AuthService } from "../services/auth.service";
 import { Request, Response } from 'express';
 import {UserService}  from "../services/user.service";
-import HttpException from "../exceptions/HttpException";
+import HttpException from "../exceptions/HttpException2";
 
 export class AuthController{
     static async  register(req:Request, res:Response){

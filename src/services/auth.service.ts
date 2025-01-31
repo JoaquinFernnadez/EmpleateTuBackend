@@ -1,7 +1,7 @@
 import { PrismaClient, User } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
-import HttpException from "../exceptions/HttpException"
+import HttpException from "../exceptions/HttpException2"
 
 const prisma = new PrismaClient()
 const Token_password = process.env.TOKEN_PASSWORD || 'pass'
